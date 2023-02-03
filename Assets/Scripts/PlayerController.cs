@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip crashSound;
 
-    public bool gameOver = false;
-    private bool isOnGround = true;
+    public bool gameOver = true;
+    private int doubleJump = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +28,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump != 0 && !gameOver)
         {
-            isOnGround = false;
+            doubleJump--;
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             playerAmmin.SetTrigger("Jump_trig");
             playerAudio.PlayOneShot(jumpSound,1.0f);
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            isOnGround = true;
+            doubleJump = 2;
             dirtParticle.Play();
         }
         else if (other.gameObject.CompareTag("Obstancle"))

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject obstaclesSpawn;
+    [SerializeField] private GameObject[] obstaclesSpawn;
     private PlayerController playerController;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,8 @@ public class SpawnManager : MonoBehaviour
         
     }
     void ObstaclesSpawn(){
+        int randIn = Random.Range(0, obstaclesSpawn.Length);
         if (!playerController.gameOver)
-            Instantiate(obstaclesSpawn,obstaclesSpawn.transform.position,obstaclesSpawn.transform.rotation);
+            Instantiate(obstaclesSpawn[randIn],obstaclesSpawn[randIn].transform.position,obstaclesSpawn[randIn].transform.rotation);
     }
 }
